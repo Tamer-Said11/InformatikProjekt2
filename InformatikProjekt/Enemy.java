@@ -15,6 +15,7 @@ public class Enemy extends Fighter
      */
     public void act()
     {
+
         if(target == null){
             target = getWorld().getObjects(Player.class).get(0);
         }

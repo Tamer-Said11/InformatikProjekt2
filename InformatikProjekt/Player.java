@@ -17,17 +17,17 @@ public class Player extends Fighter
         detectInput();
         rotateToMouse();
     }
-    
+    int mx;
+    int my;
     private void rotateToMouse(){
         MouseInfo mouse = Greenfoot.getMouseInfo();
-        var mx = 0;
-        var my = 0;
+
         //var px = 0;
         //var py = 0;
         //var time = 0;
         if(mouse!=null){
-        mx = mouse.getX();
-           my = mouse.getY();
+            mx = mouse.getX();
+            my = mouse.getY();
            //px = getX();
            //py = getY();
            //time = 0;
@@ -37,6 +37,11 @@ public class Player extends Fighter
             //time++;
             //int x = (int)lerp(px, mx,time,200);
             //int y = (int)lerp(py, my,time,200);
+            
+            //check the absolute distance betwenn the player and the mouse, so it doesnt come to bugs if the miouse int the player!!!
+            if(Math.hypot(mx - getX(), my - getY()) < 10){
+                return;
+            }
             turnTowards(mx, my);
     
         

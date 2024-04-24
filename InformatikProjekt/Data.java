@@ -5,5 +5,9 @@ public class Data
        public static Wave[] WAVES_NORMAL = new Wave[]{
         new Wave(wave1)
         };
-        
+    static enum Difficulties {
+      EASY,
+      NORMAL,
+      HARD
+    }
 }
