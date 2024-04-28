@@ -12,10 +12,28 @@ public class Player extends Fighter
      * Act - do whatever the Player wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
+    private int range = 50;
+    //Level
+    private int[] level = new int[] {0,10,100,500,1000 };
+    private int totalXp = 0;   
+    private int currentLevel = 0;
+    //Upgrade
+    private int nextUpgrade;
+    private int[] upgradeLevel = new int[] {2,5,10,15,20};
+    
+    private Design design;
+    private IAmWeapon _weapon;
+    public Player(){
+        design = new Design();
+        ObjectCreater.instance.createObject(design, 0, 0);
+        _weapon = new BaseSword(this);
+    }
     public void act()
     {
         detectInput();
         rotateToMouse();
+        design.setLocation(getX(), getY());
+        
     }
     int mx;
     int my;
@@ -53,13 +71,44 @@ public class Player extends Fighter
         }
         return start + time/targetTime * (end - start);
     }
-    
+    //Bug wenn mal Auswahl Ignoriert
+    public void addXp(int amount){
+        totalXp += amount;
+        var newL = getLevel();
+        if(newL != currentLevel){
+            
+            currentLevel = newL;
+            newStats();
+            if(currentLevel >= upgradeLevel[nextUpgrade]){
+                UpgradeManager.newChoice(currentLevel);
+                if(nextUpgrade  < upgradeLevel.length + 1){
+                    nextUpgrade++;
+                }
+            }
+        }
+    }
+    private void newStats(){
+        
+    }
+    private int getLevel(){
+        var a = totalXp;
+        for(int i = 0; i < level.length;i++){
+            a -= level[i];
+            if(a < 0) {return i;}
+            
+        }
+        return level.length;
+    }
     private void detectInput(){
         if(Greenfoot.isKeyDown("Up")){
             move(moveSpeed);
         }
         if(Greenfoot.isKeyDown("Down")){
             move(-moveSpeed);
+        }
+        if(Greenfoot.isKeyDown("Space")){
+            
+          _weapon.Attack(baseDamage);
         }
 
         

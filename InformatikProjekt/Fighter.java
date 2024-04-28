@@ -6,18 +6,17 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class Fighter extends Actor
+public abstract class Fighter extends SmoothMover
 {
-    private int maxHealth = 10;
+    protected int maxHealth = 10;
     private int Health;
     
     protected int moveSpeed = 1;
     
     protected int baseDamage = 1;
     
-    public void act()
-    {
-        
+    public Fighter(){
+        Health = maxHealth;
     }
     
     private void changeHealth(int amount ){
